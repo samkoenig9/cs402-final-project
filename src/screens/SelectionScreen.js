@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { initialEntries } from '../data/initialEntries';
 import SelectableListItem from '../components/SelectableListItem';
 
-export default function SelectionScreen() {
+export default function SelectionScreen({ onFightSelected }) {
   const [selectedId, setSelectedId] = useState(null);
 
   const selectedEntry = useMemo(
@@ -19,7 +19,9 @@ export default function SelectionScreen() {
       return;
     }
 
-    Alert.alert('FIGHT!!!', `${selectedEntry.label} selected.`);
+    if (onFightSelected) {
+      onFightSelected(selectedEntry.id);
+    }
   };
 
   return (
