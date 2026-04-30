@@ -1,11 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 export default function HealthBar({ label, percentage, isPlayer }) {
   const barColor = isPlayer ? '#f2c94c' : '#e53935';
   const bgColor = '#1a2030';
+  const shakeX = useRef(new Animated.Value(0)).current;
+  const prevPercentage = useRef(percentage);
+
+  useEffect(() => {
+    if (percentage < prevPercentage.current) {
+      Animated.sequence([
+        Animated.timing(shakeX, { toValue: -2, duration: 35, useNativeDriver: true }),
+        Animated.timing(shakeX, { toValue: 2, duration: 35, useNativeDriver: true }),
+        Animated.timing(shakeX, { toValue: -2, duration: 35, useNativeDriver: true }),
+        Animated.timing(shakeX, { toValue: 2, duration: 35, useNativeDriver: true }),
+        Animated.timing(shakeX, { toValue: 0, duration: 35, useNativeDriver: true }),
+      ]).start();
+    }
+
+    prevPercentage.current = percentage;
+  }, [percentage, shakeX]);
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, { transform: [{ translateX: shakeX }] }]}>
       <Text style={[styles.label, { color: barColor }]}>{label}</Text>
       <View style={[styles.barBg, { backgroundColor: bgColor }]}>
         <View
@@ -16,7 +33,7 @@ export default function HealthBar({ label, percentage, isPlayer }) {
         />
       </View>
       <Text style={[styles.percentage, { color: barColor }]}>{Math.round(percentage)}%</Text>
-    </View>
+    </Animated.View>
   );
 }
 

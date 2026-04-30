@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dimensions, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -8,72 +8,271 @@ import DefenseButton from '../components/DefenseButton';
 
 export default function FightScreen({ fightId, onExit }) {
   const fightConfig = fightConfigs[fightId] || fightConfigs['fight-1'];
+  const enemySpriteSource = fightConfig.opponent.image || fightConfigs['fight-1'].opponent.image;
   const [playerHealth, setPlayerHealth] = useState(fightConfig.player.initialHealth);
   const [enemyHealth, setEnemyHealth] = useState(fightConfig.opponent.initialHealth);
+  const [fightEnded, setFightEnded] = useState(false);
+  const [guardHeld, setGuardHeld] = useState(false);
+  const [duckHeld, setDuckHeld] = useState(false);
+  const [guardMeter, setGuardMeter] = useState(100);
+  const [duckMeter, setDuckMeter] = useState(100);
+  const [defenseFeedback, setDefenseFeedback] = useState({ id: 0, text: '' });
+  const guardHeldRef = useRef(guardHeld);
+  const duckHeldRef = useRef(duckHeld);
+  const guardMeterRef = useRef(guardMeter);
+  const duckMeterRef = useRef(duckMeter);
 
+  useEffect(() => {
+    guardHeldRef.current = guardHeld;
+  }, [guardHeld]);
+
+  useEffect(() => {
+    duckHeldRef.current = duckHeld;
+  }, [duckHeld]);
+
+  useEffect(() => {
+    guardMeterRef.current = guardMeter;
+  }, [guardMeter]);
+
+  useEffect(() => {
+    duckMeterRef.current = duckMeter;
+  }, [duckMeter]);
+
+  // PLACEHOLDER: each tap on an attack zone reduces enemy health by 1 until it reaches 0
   const handlePlayerAttack = (zone) => {
-    // Placeholder: log attack; no game logic yet
-    console.log(`Player attacked ${zone}`);
+    if (fightEnded) return;
+    
+    // Deal 1 damage to enemy
+    const newEnemyHealth = Math.max(0, enemyHealth - 1);
+    setEnemyHealth(newEnemyHealth);
+    
+    // Check if fight ends
+    if (newEnemyHealth <= 0) {
+      setFightEnded(true);
+    }
+    
+    console.log(`Player attacked ${zone}! Enemy health: ${newEnemyHealth}`);
   };
 
-  const handleDefense = (defenseType) => {
-    // Placeholder: log defense; no game logic yet
-    console.log(`Player activated ${defenseType}`);
+  useEffect(() => {
+    if (fightEnded) {
+      setGuardHeld(false);
+      setDuckHeld(false);
+    }
+  }, [fightEnded]);
+
+  useEffect(() => {
+    if (fightEnded) return;
+
+    const guardMeterInterval = setInterval(() => {
+      setGuardMeter((prev) => Math.min(100, prev + 2)); // Guard refill rate (prev + _)
+    }, 100);
+
+    return () => clearInterval(guardMeterInterval);
+  }, [fightEnded]);
+
+  useEffect(() => {
+    if (fightEnded) return;
+
+    const duckMeterInterval = setInterval(() => {
+      setDuckMeter((prev) => {
+        if (duckHeld) {
+          const next = Math.max(0, prev - 4); // Duck depletion rate (prev - _)
+          if (next <= 0) {
+            setDuckHeld(false);
+          }
+          return next;
+        }
+        return Math.min(100, prev + 1); // Duck refill rate (prev + _)
+      });
+    }, 100);
+
+    return () => clearInterval(duckMeterInterval);
+  }, [fightEnded, duckHeld]);
+
+  useEffect(() => {
+    if (!defenseFeedback.text) return;
+
+    const timeout = setTimeout(() => {
+      setDefenseFeedback((prev) => ({ ...prev, text: '' }));
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [defenseFeedback.id, defenseFeedback.text]);
+
+  const showDefenseFeedback = (text) => {
+    setDefenseFeedback({ id: Date.now(), text });
   };
+
+  // PLACEHOLDER: Enemy attacks for 1 damage every second
+  useEffect(() => {
+    if (fightEnded) return;
+
+    const attackInterval = setInterval(() => {
+      let wasBlocked = false;
+      if (guardHeldRef.current && guardMeterRef.current >= 100) {
+        wasBlocked = true;
+        showDefenseFeedback('BLOCKED!');
+        setGuardMeter(0);
+        setGuardHeld(false);
+      } else if (duckHeldRef.current && duckMeterRef.current > 0) {
+        wasBlocked = true;
+        showDefenseFeedback('DODGED!');
+      }
+
+      if (wasBlocked) {
+        console.log('Enemy attack was defended');
+        return;
+      }
+
+      setPlayerHealth((prevHealth) => {
+        const newPlayerHealth = Math.max(0, prevHealth - 1);
+        
+        // Check if player's health reaches 0
+        if (newPlayerHealth <= 0) {
+          setFightEnded(true);
+        }
+        
+        console.log(`Enemy attacked! Player health: ${newPlayerHealth}`);
+        return newPlayerHealth;
+      });
+    }, 1000);
+
+    return () => clearInterval(attackInterval);
+  }, [fightEnded]);
+
+  const handleRematch = () => {
+    setPlayerHealth(fightConfig.player.initialHealth);
+    setEnemyHealth(fightConfig.opponent.initialHealth);
+    setFightEnded(false);
+    setGuardHeld(false);
+    setDuckHeld(false);
+    setGuardMeter(100);
+    setDuckMeter(100);
+    setDefenseFeedback({ id: 0, text: '' });
+  };
+
+  const isVictory = enemyHealth <= 0;
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
-      <View style={styles.container}>
-        {/* Header with exit button */}
-        <View style={styles.header}>
-          <Pressable onPress={onExit} style={({ pressed }) => [styles.exitButton, pressed && styles.exitPressed]}>
-            <Text style={styles.exitText}>✕</Text>
-          </Pressable>
-          <Text style={styles.opponentName}>{fightConfig.opponent.name}</Text>
-          <View style={{ width: 32 }} />
-        </View>
-
-        {/* Enemy health bar */}
-        <View style={styles.healthBarContainer}>
-          <HealthBar label="Enemy HP" percentage={enemyHealth} isPlayer={false} />
-        </View>
-
-        {/* Sprite area with overlaid attack zones */}
-        <View style={styles.spriteContainer}>
-          {fightConfig.opponent.image ? (
-            <Image
-              source={fightConfig.opponent.image}
-              style={styles.enemySprite}
-              resizeMode="cover"
-            />
-          ) : (
-            <View style={styles.enemySprite} />
-          )}
-          <Pressable
-            onPress={() => handlePlayerAttack('top')}
-            style={({ pressed }) => [styles.overlayZone, styles.topZone, pressed && styles.zonePressed]}
-          />
-          <Pressable
-            onPress={() => handlePlayerAttack('bottom')}
-            style={({ pressed }) => [styles.overlayZone, styles.bottomZone, pressed && styles.zonePressed]}
-          />
-        </View>
-
-        {/* Player health bar */}
-        <View style={styles.healthBarContainer}>
-          <HealthBar label="Player HP" percentage={playerHealth} isPlayer={true} />
-        </View>
-
-        {/* Defense controls */}
-        <View style={styles.controlsArea}>
-          <Text style={styles.controlsLabel}>HOLD TO DEFEND</Text>
-          <View style={styles.buttonRow}>
-            <DefenseButton label="Guard" onPress={() => handleDefense('guard')} />
-            <DefenseButton label="Duck" onPress={() => handleDefense('duck')} />
+      {fightEnded ? (
+        /* Fight End Screen */
+        <View style={styles.container}>
+          <View style={styles.fightEndContainer}>
+            <Text style={[styles.fightEndTitle, isVictory ? styles.victoryText : styles.defeatText]}>
+              {isVictory ? 'VICTORY!' : 'DEFEAT'}
+            </Text>
+            <Text style={styles.fightEndSubtitle}>
+              {isVictory
+                ? `Enemy defeated after ${fightConfig.opponent.initialHealth - enemyHealth} attacks`
+                : `You were defeated after ${fightConfig.player.initialHealth - playerHealth} damage taken`
+              }
+            </Text>
+            {isVictory ? (
+              <Pressable
+                onPress={() => onExit()}
+                style={({ pressed }) => [styles.returnButton, pressed && styles.returnButtonPressed]}
+              >
+                <Text style={styles.returnButtonText}>RETURN TO MAIN MENU</Text>
+              </Pressable>
+            ) : (
+              <View style={styles.endButtonsRow}>
+                <Pressable
+                  onPress={handleRematch}
+                  style={({ pressed }) => [styles.rematchButton, pressed && styles.rematchButtonPressed]}
+                >
+                  <Text style={styles.rematchButtonText}>REMATCH</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => onExit()}
+                  style={({ pressed }) => [styles.returnButton, pressed && styles.returnButtonPressed]}
+                >
+                  <Text style={styles.returnButtonText}>RETURN TO MAIN MENU</Text>
+                </Pressable>
+              </View>
+            )}
           </View>
         </View>
-      </View>
+      ) : (
+        /* Fight Screen */
+        <View style={styles.container}>
+          {/* Header with exit button */}
+          <View style={styles.header}>
+            <Pressable onPress={onExit} style={({ pressed }) => [styles.exitButton, pressed && styles.exitPressed]}>
+              <Text style={styles.exitText}>✕</Text>
+            </Pressable>
+            <Text style={styles.opponentName}>{fightConfig.opponent.name}</Text>
+            <View style={{ width: 32 }} />
+          </View>
+
+          {/* Enemy health bar */}
+          <View style={styles.healthBarContainer}>
+            <HealthBar label="Enemy HP" percentage={enemyHealth} isPlayer={false} />
+          </View>
+
+          {/* Sprite area with overlaid attack zones */}
+          <View style={styles.spriteContainer}>
+            {enemySpriteSource ? (
+              <Image
+                source={enemySpriteSource}
+                style={styles.enemySprite}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.enemySprite} />
+            )}
+            <Pressable
+              onPress={() => handlePlayerAttack('top')}
+              style={({ pressed }) => [styles.overlayZone, styles.topZone, pressed && styles.zonePressed]}
+            />
+            <Pressable
+              onPress={() => handlePlayerAttack('bottom')}
+              style={({ pressed }) => [styles.overlayZone, styles.bottomZone, pressed && styles.zonePressed]}
+            />
+            {!!defenseFeedback.text && (
+              <View style={styles.feedbackOverlay}>
+                <Text key={defenseFeedback.id} style={styles.feedbackText}>{defenseFeedback.text}</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Player health bar */}
+          <View style={styles.healthBarContainer}>
+            <HealthBar label="Player HP" percentage={playerHealth} isPlayer={true} />
+          </View>
+
+          {/* Defense controls */}
+          <View style={styles.controlsArea}>
+            <Text style={styles.controlsLabel}>HOLD TO DEFEND</Text>
+            <View style={styles.buttonRow}>
+              <DefenseButton
+                label="Guard"
+                disabled={guardMeter < 100}
+                onPressIn={() => {
+                  if (guardMeter >= 100) {
+                    setGuardHeld(true);
+                  }
+                }}
+                onPressOut={() => setGuardHeld(false)}
+                meter={guardMeter}
+              />
+              <DefenseButton
+                label="Duck"
+                disabled={duckMeter <= 0}
+                onPressIn={() => {
+                  if (duckMeter > 0) {
+                    setDuckHeld(true);
+                  }
+                }}
+                onPressOut={() => setDuckHeld(false)}
+                meter={duckMeter}
+              />
+            </View>
+          </View>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -160,6 +359,23 @@ const styles = StyleSheet.create({
   zonePressed: {
     backgroundColor: 'rgba(245, 67, 54, 0.3)',
   },
+  feedbackOverlay: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(13, 16, 22, 0.55)',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderWidth: 2,
+    borderColor: '#f2c94c',
+  },
+  feedbackText: {
+    color: '#f7f8fb',
+    fontSize: 26,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+  },
   controlsArea: {
     marginTop: 8,
     marginBottom: 4,
@@ -176,5 +392,76 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  fightEndContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  fightEndTitle: {
+    fontSize: 48,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  fightEndSubtitle: {
+    color: '#f7f8fb',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 32,
+  },
+  victoryText: {
+    color: '#f2c94c',
+  },
+  defeatText: {
+    color: '#e53935',
+  },
+  endButtonsRow: {
+    width: '100%',
+    gap: 12,
+  },
+  rematchButton: {
+    backgroundColor: '#e53935',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderWidth: 2,
+    borderColor: '#b71c1c',
+    transform: [{ skewX: '-6deg' }],
+  },
+  rematchButtonPressed: {
+    opacity: 0.8,
+    transform: [{ skewX: '-6deg' }, { scale: 0.96 }],
+  },
+  rematchButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    textAlign: 'center',
+  },
+  returnButton: {
+    backgroundColor: '#f2c94c',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    borderWidth: 2,
+    borderColor: '#d4a017',
+    transform: [{ skewX: '-6deg' }],
+  },
+  returnButtonPressed: {
+    opacity: 0.8,
+    transform: [{ skewX: '-6deg' }, { scale: 0.96 }],
+  },
+  returnButtonText: {
+    color: '#0d1016',
+    fontSize: 14,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    textAlign: 'center',
   },
 });
