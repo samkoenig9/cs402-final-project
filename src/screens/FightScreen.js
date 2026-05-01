@@ -115,17 +115,26 @@ export default function FightScreen({ fightId, onExit }) {
       if (enemyState === "idle") {
         const types = ["guard", "duck", "both"];
         const randType = types[Math.floor(Math.random() * types.length)];
-  
+      
         setAttackType(randType);
         setEnemyState("windup");
-  
+      
       } else if (enemyState === "windup") {
-        setEnemyState("attack");
-  
+        showDefenseFeedback(`INCOMING: ${attackType.toUpperCase()}`);
+      
+        setEnemyState("waiting");
+      
+        setTimeout(() => {
+          setEnemyState("attack");
+        }, 500);
+      
+      } else if (enemyState === "waiting") {
+        // do nothing, just waiting for timeout
+      
       } else if (enemyState === "attack") {
-  
+      
         let wasBlocked = false;
-  
+      
         if (attackType === "guard" && guardHeldRef.current && guardMeterRef.current >= 100) {
           wasBlocked = true;
           showDefenseFeedback("BLOCKED!");
@@ -146,7 +155,7 @@ export default function FightScreen({ fightId, onExit }) {
           wasBlocked = true;
           showDefenseFeedback("DEFENDED!");
         }
-  
+      
         if (!wasBlocked) {
           setPlayerHealth(prev => {
             const newHealth = Math.max(0, prev - 1);
@@ -154,7 +163,7 @@ export default function FightScreen({ fightId, onExit }) {
             return newHealth;
           });
         }
-  
+      
         setEnemyState("idle");
       }
   
@@ -230,9 +239,9 @@ export default function FightScreen({ fightId, onExit }) {
           </View>
 
           // debug text
-          <Text style={{ color: 'white', textAlign: 'center' }}>
-            State: {enemyState} | Attack: {attackType}
-          </Text>
+         // <Text style={{ color: 'white', textAlign: 'center' }}>
+           //  State: {enemyState} | Attack: {attackType}
+         // </Text>
 
           {/* Enemy health bar */}
           <View style={styles.healthBarContainer}>
