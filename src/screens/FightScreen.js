@@ -24,6 +24,18 @@ export default function FightScreen({ fightId, onExit }) {
   const [enemyState, setEnemyState] = useState("idle");
   const [attackType, setAttackType] = useState(null);
 
+  const getEnemySpriteSource = () => {
+  if (enemyState === "windup" || enemyState === "waiting") {
+    return fightConfig.opponent.windupImage || enemySpriteSource;
+  }
+
+  if (enemyState === "attack") {
+    return fightConfig.opponent.attackImage || enemySpriteSource;
+  }
+
+  return fightConfig.opponent.idleImage || enemySpriteSource;
+  };
+
   useEffect(() => {
     guardHeldRef.current = guardHeld;
   }, [guardHeld]);
@@ -238,10 +250,6 @@ export default function FightScreen({ fightId, onExit }) {
             <View style={{ width: 32 }} />
           </View>
 
-          // debug text
-         // <Text style={{ color: 'white', textAlign: 'center' }}>
-           //  State: {enemyState} | Attack: {attackType}
-         // </Text>
 
           {/* Enemy health bar */}
           <View style={styles.healthBarContainer}>
@@ -252,9 +260,9 @@ export default function FightScreen({ fightId, onExit }) {
           <View style={styles.spriteContainer}>
             {enemySpriteSource ? (
               <Image
-                source={enemySpriteSource}
+                source={getEnemySpriteSource()}
                 style={styles.enemySprite}
-                resizeMode="cover"
+                resizeMode="contain"
               />
             ) : (
               <View style={styles.enemySprite} />
