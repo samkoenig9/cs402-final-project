@@ -19,7 +19,10 @@ export const fightConfigs = {
     opponent: {
       name: 'Opponent 2',
       initialHealth: 100,
-      // image: require('../assets/opponent2.png'),
+      image: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
+      idleImage: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
+      windupImage: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
+      attackImage: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
     },
     player: {
       initialHealth: 100,
