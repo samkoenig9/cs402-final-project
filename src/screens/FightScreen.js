@@ -21,6 +21,8 @@ export default function FightScreen({ fightId, onExit }) {
   const duckHeldRef = useRef(duckHeld);
   const guardMeterRef = useRef(guardMeter);
   const duckMeterRef = useRef(duckMeter);
+  const [enemyState, setEnemyState] = useState("idle");
+  const [attackType, setAttackType] = useState(null);
 
   useEffect(() => {
     guardHeldRef.current = guardHeld;
@@ -107,39 +109,68 @@ export default function FightScreen({ fightId, onExit }) {
   // PLACEHOLDER: Enemy attacks for 1 damage every second
   useEffect(() => {
     if (fightEnded) return;
-
-    const attackInterval = setInterval(() => {
-      let wasBlocked = false;
-      if (guardHeldRef.current && guardMeterRef.current >= 100) {
-        wasBlocked = true;
-        showDefenseFeedback('BLOCKED!');
-        setGuardMeter(0);
-        setGuardHeld(false);
-      } else if (duckHeldRef.current && duckMeterRef.current > 0) {
-        wasBlocked = true;
-        showDefenseFeedback('DODGED!');
-      }
-
-      if (wasBlocked) {
-        console.log('Enemy attack was defended');
-        return;
-      }
-
-      setPlayerHealth((prevHealth) => {
-        const newPlayerHealth = Math.max(0, prevHealth - 1);
-        
-        // Check if player's health reaches 0
-        if (newPlayerHealth <= 0) {
-          setFightEnded(true);
+  
+    const interval = setInterval(() => {
+  
+      if (enemyState === "idle") {
+        const types = ["guard", "duck", "both"];
+        const randType = types[Math.floor(Math.random() * types.length)];
+      
+        setAttackType(randType);
+        setEnemyState("windup");
+      
+      } else if (enemyState === "windup") {
+        showDefenseFeedback(`INCOMING: ${attackType.toUpperCase()}`);
+      
+        setEnemyState("waiting");
+      
+        setTimeout(() => {
+          setEnemyState("attack");
+        }, 500);
+      
+      } else if (enemyState === "waiting") {
+        // do nothing, just waiting for timeout
+      
+      } else if (enemyState === "attack") {
+      
+        let wasBlocked = false;
+      
+        if (attackType === "guard" && guardHeldRef.current && guardMeterRef.current >= 100) {
+          wasBlocked = true;
+          showDefenseFeedback("BLOCKED!");
+          setGuardMeter(0);
+          setGuardHeld(false);
+        } 
+        else if (attackType === "duck" && duckHeldRef.current && duckMeterRef.current > 0) {
+          wasBlocked = true;
+          showDefenseFeedback("DODGED!");
+        } 
+        else if (
+          attackType === "both" &&
+          (
+            (guardHeldRef.current && guardMeterRef.current >= 100) ||
+            (duckHeldRef.current && duckMeterRef.current > 0)
+          )
+        ) {
+          wasBlocked = true;
+          showDefenseFeedback("DEFENDED!");
         }
-        
-        console.log(`Enemy attacked! Player health: ${newPlayerHealth}`);
-        return newPlayerHealth;
-      });
-    }, 1000);
-
-    return () => clearInterval(attackInterval);
-  }, [fightEnded]);
+      
+        if (!wasBlocked) {
+          setPlayerHealth(prev => {
+            const newHealth = Math.max(0, prev - 1);
+            if (newHealth <= 0) setFightEnded(true);
+            return newHealth;
+          });
+        }
+      
+        setEnemyState("idle");
+      }
+  
+    }, 600); // faster than 1000ms
+  
+    return () => clearInterval(interval);
+  }, [enemyState, fightEnded]);
 
   const handleRematch = () => {
     setPlayerHealth(fightConfig.player.initialHealth);
@@ -206,6 +237,11 @@ export default function FightScreen({ fightId, onExit }) {
             <Text style={styles.opponentName}>{fightConfig.opponent.name}</Text>
             <View style={{ width: 32 }} />
           </View>
+
+          // debug text
+         // <Text style={{ color: 'white', textAlign: 'center' }}>
+           //  State: {enemyState} | Attack: {attackType}
+         // </Text>
 
           {/* Enemy health bar */}
           <View style={styles.healthBarContainer}>
