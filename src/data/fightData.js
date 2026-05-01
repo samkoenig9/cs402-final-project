@@ -14,10 +14,10 @@ export const fightConfigs = {
   },
   'fight-2': {
     id: 'fight-2',
-    label: 'Fight 2',
-    detail: 'Faster combo checks',
+    label: 'Boxer',
+    detail: 'Quick punches and timed defense',
     opponent: {
-      name: 'Opponent 2',
+      name: 'Boxer',
       initialHealth: 100,
       image: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
       idleImage: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
