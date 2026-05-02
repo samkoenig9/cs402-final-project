@@ -7,6 +7,59 @@ export const fightConfigs = {
       name: 'Ham',
       initialHealth: 100,
       image: require('../../assets/enemies/enemy1/ham.jpg'),
+      vertices: [
+          [0, 100, 0, 0, 0, 0, 0], // idle
+          [0, 0, 100, 0, 0, 0, 0], // wind
+          [100, 0, 0, 0, 0, 0, 0], // attack
+          [0, 0, 0, 0, 100, 0, 0], // duckwind
+          [100, 0, 0, 0, 0, 0, 0], // duckattack
+          [0, 0, 0, 0, 0, 0, 100], // guardwind
+          [100, 0, 0, 0, 0, 0, 0]  // guardattack
+        ],
+        states: [
+          { // idle
+          image: '../../assets/enemies/enemy1/ham.jpg',
+          duration: 100,
+          isAttack: false,
+          attackType: "both"
+          },
+          { // wind
+          image: '../../assets/enemies/enemy1/ham_wind.jpg',
+          duration: 50,
+          isAttack: false,
+          attackType: "both"
+          },
+          { // attack
+          image: '../../assets/enemies/enemy1/ham_attack.jpg',
+          duration: 5,
+          isAttack: true,
+          attackType: "both"
+          },
+          { // duckwind
+          image: '../../assets/enemies/enemy1/ham.jpg',
+          duration: 50,
+          isAttack: false,
+          attackType: "duck"
+          },
+          { // duckattack
+          image: '../../assets/enemies/enemy1/ham.jpg',
+          duration: 5,
+          isAttack: true,
+          attackType: "duck"
+          },
+          { // guardwind
+          image: '../../assets/enemies/enemy1/ham.jpg',
+          duration: 50,
+          isAttack: false,
+          attackType: "guard"
+          },
+          { // guardattack
+          image: '../../assets/enemies/enemy1/ham.jpg',
+          duration: 5,
+          isAttack: true,
+          attackType: "guard"
+          },
+        ]
     },
     player: {
       initialHealth: 100,

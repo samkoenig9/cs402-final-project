@@ -118,8 +118,68 @@ export default function FightScreen({ fightId, onExit }) {
     setDefenseFeedback({ id: Date.now(), text });
   };
 
+  // function to find the next state of the enemy.
+  function nextFightState(index, transitions){
+    // get random integer 1 to 10
+    const rand = Math.floor((Math.random() * 100) + 1);
+    // search through row for lowest integer value greater than rand
+    var nextState = 0;
+    var nextStatePow = 101;
+    // loop through all vetices
+    for (var i = 0; i < transitions[index].length; i++){
+      // get transition value
+      var statePow = transitions[index][i];
+      // if transition value > rand & < nextState, set to next state
+      if (statePow >= rand && statePow < nextState){
+        nextState = i;
+        nextStatePow = statePow;
+      }
+    }
+    // return next state
+    return nextState;
+  }
+
   // PLACEHOLDER: Enemy attacks for 1 damage every second
   useEffect(() => {
+    /*
+    // Rio Fight System...
+    if (fightEnded){
+      // if fight ended, set FightScreen to neutral state
+      savedTime = 0;
+      index = 0;
+      setEnemyState(0);
+      return;
+    };
+
+
+    // get new time
+    const newTime = gettime(); // THIS FUNCTION WAS NEVER MADE!!!!
+    // WAS PLANNING ON USING SET INTERVAL TO MAKE A TIME FUNCTION
+
+    // get states and transitions
+    const states = fightConfig.opponent.states;
+    const transitions = fightConfig.opponent.vertices;
+    // check if phase transition should happen
+    if(newTime - savedTime > states[enemyState].duration)
+    {
+      // get next State
+      const newIndex = nextFightState(enemyState, transitions);
+      // set state to newState
+      setEnemyState(newIndex);
+
+
+      // set image based on new state
+      setEnemyImage(newState.image);
+
+
+      // set savedTime to newTime
+      savedTime = newTime;
+    }
+    if(states[enemyState].isAttack){
+
+     */
+
+
     if (fightEnded) return;
   
     const interval = setInterval(() => {
