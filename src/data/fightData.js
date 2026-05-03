@@ -4,7 +4,7 @@ export const fightConfigs = {
     label: 'Fight 1',
     detail: 'Balanced opener',
     opponent: {
-      name: 'Ham',
+      name: 'Hamster',
       initialHealth: 100,
       image: require('../../assets/enemies/enemy1/ham.jpg'),
       idleImage: require('../../assets/enemies/enemy1/ham.jpg'),
@@ -89,9 +89,72 @@ export const fightConfigs = {
       idleImage: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
       windupImage: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
       attackImage: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
+      vertices: [
+          [20, 55, 0, 75, 0, 100, 0], // idle
+          [0, 0, 100, 0, 0, 0, 0], // wind
+          [100, 0, 0, 0, 0, 0, 0], // attack
+          [0, 0, 0, 0, 100, 0, 0], // duckwind
+          [100, 0, 0, 0, 0, 0, 0], // duckattack
+          [0, 0, 0, 0, 0, 0, 100], // guardwind
+          [100, 0, 0, 0, 0, 0, 0]  // guardattack
+        ],
+        states: [
+          { // idle
+          image: '../../assets/enemies/enemy2/enemy2_idle.jpg',
+          duration: 2000,
+          isAttack: false,
+          attackType: "both"
+          },
+          { // wind
+          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          duration: 1000,
+          isAttack: false,
+          attackType: "both"
+          },
+          { // attack
+          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          duration: 400,
+          isAttack: true,
+          attackType: "both",
+          damage: 5
+          },
+          { // duckwind
+          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          duration: 900,
+          isAttack: false,
+          attackType: "duck"
+          },
+          { // duckattack
+          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          duration: 400,
+          isAttack: true,
+          attackType: "duck",
+          damage: 5
+          },
+          { // guardwind
+          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          duration: 900,
+          isAttack: false,
+          attackType: "guard"
+          },
+          { // guardattack
+          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          duration: 400,
+          isAttack: true,
+          attackType: "guard",
+          damage: 5
+          },
+        ]
     },
     player: {
-      initialHealth: 100,
+      initialHealth: 200,
+      attack: {
+        cooldownMs: 500,
+        zones: {
+          top: { damage: 2 },
+          bottom: { damage: 5 },
+        },
+      },
     },
   },
   'fight-3': {

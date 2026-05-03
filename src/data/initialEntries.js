@@ -1,7 +1,7 @@
 export const initialEntries = [
   { id: 'fight-1', label: '1 - Hamster', detail: 'Just an ordinary hamster?' },
-  { id: 'fight-2', label: 'Boxer', detail: 'Quick punches and timed defense' },
-  { id: 'fight-3', label: 'Fight 3', detail: 'Placeholder 3' },
-  { id: 'fight-4', label: 'Fight 4', detail: 'Placeholder 4' },
-  { id: 'fight-5', label: 'Fight 5', detail: 'Placeholder 5' },
+  { id: 'fight-2', label: '2 - Boxer', detail: 'Quick hands and light feet.' },
+  { id: 'fight-3', label: '3 - Fighter', detail: 'Placeholder 3' },
+  { id: 'fight-4', label: '4 - Fighter', detail: 'Placeholder 4' },
+  { id: 'fight-5', label: '5 - Fighter', detail: 'Placeholder 5' },
 ];
