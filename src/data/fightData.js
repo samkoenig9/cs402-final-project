@@ -7,8 +7,11 @@ export const fightConfigs = {
       name: 'Ham',
       initialHealth: 100,
       image: require('../../assets/enemies/enemy1/ham.jpg'),
-      vertices: [
-          [0, 100, 0, 0, 0, 0, 0], // idle
+      idleImage: require('../../assets/enemies/enemy1/ham.jpg'),
+      windupImage: require('../../assets/enemies/enemy1/ham_wind.jpg'),
+      attackImage: require('../../assets/enemies/enemy1/ham_attack.jpg'),
+          vertices: [
+          [30, 60, 0, 80, 0, 100, 0], // idle
           [0, 0, 100, 0, 0, 0, 0], // wind
           [100, 0, 0, 0, 0, 0, 0], // attack
           [0, 0, 0, 0, 100, 0, 0], // duckwind
@@ -19,50 +22,60 @@ export const fightConfigs = {
         states: [
           { // idle
           image: '../../assets/enemies/enemy1/ham.jpg',
-          duration: 100,
+          duration: 2500,
           isAttack: false,
           attackType: "both"
           },
           { // wind
           image: '../../assets/enemies/enemy1/ham_wind.jpg',
-          duration: 50,
+          duration: 1200,
           isAttack: false,
           attackType: "both"
           },
           { // attack
           image: '../../assets/enemies/enemy1/ham_attack.jpg',
-          duration: 5,
+          duration: 500,
           isAttack: true,
-          attackType: "both"
+          attackType: "both",
+          damage: 2
           },
           { // duckwind
           image: '../../assets/enemies/enemy1/ham.jpg',
-          duration: 50,
+          duration: 1200,
           isAttack: false,
           attackType: "duck"
           },
           { // duckattack
           image: '../../assets/enemies/enemy1/ham.jpg',
-          duration: 5,
+          duration: 500,
           isAttack: true,
-          attackType: "duck"
+          attackType: "duck",
+          damage: 2
           },
           { // guardwind
           image: '../../assets/enemies/enemy1/ham.jpg',
-          duration: 50,
+          duration: 1200,
           isAttack: false,
           attackType: "guard"
           },
           { // guardattack
           image: '../../assets/enemies/enemy1/ham.jpg',
-          duration: 5,
+          duration: 500,
           isAttack: true,
-          attackType: "guard"
+          attackType: "guard",
+          damage: 2
           },
         ]
     },
     player: {
       initialHealth: 100,
+      attack: {
+        cooldownMs: 1000,
+        zones: {
+          top: { damage: 2 },
+          bottom: { damage: 10 },
+        },
+      },
     },
   },
   'fight-2': {

@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function DefenseButton({
   label,
@@ -8,19 +9,46 @@ export default function DefenseButton({
   disabled,
   meter,
 }) {
+  const [isPressed, setIsPressed] = useState(false);
   const clampedMeter = typeof meter === 'number' ? Math.max(0, Math.min(100, meter)) : null;
+
+  if (disabled && isPressed) {
+    setIsPressed(false);
+  }
+
+  const handlePressIn = () => {
+    if (disabled) return;
+    setIsPressed(true);
+    if (onPressIn) onPressIn();
+  };
+
+  const handlePressOut = () => {
+    if (disabled) return;
+    setIsPressed(false);
+    if (onPressOut) onPressOut();
+    if (onPress) onPress();
+  };
+
+  const handleTouchStart = () => {
+    if (disabled) return;
+    handlePressIn();
+  };
+
+  const handleTouchEnd = () => {
+    if (disabled) return;
+    handlePressOut();
+  };
 
   return (
     <View style={styles.wrapper}>
-      <Pressable
-        onPress={onPress}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        disabled={disabled}
-        style={({ pressed }) => [
+      <View
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        style={[
           styles.button,
           disabled && styles.buttonDisabled,
-          pressed && !disabled && styles.buttonPressed,
+          isPressed && !disabled && styles.buttonPressed,
         ]}
       >
         {clampedMeter !== null && (
@@ -29,7 +57,7 @@ export default function DefenseButton({
           </View>
         )}
         <Text style={[styles.label, disabled && styles.labelDisabled]}>{label}</Text>
-      </Pressable>
+      </View>
     </View>
   );
 }
