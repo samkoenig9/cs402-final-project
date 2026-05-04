@@ -291,12 +291,17 @@ export default function FightScreen({ fightId, onExit }) {
           } else if (
             attackType === "both" &&
             (
-              (guardHeldRef.current && guardMeterRef.current >= 100) &&
+              (guardHeldRef.current && guardMeterRef.current >= 100) ||
               (duckHeldRef.current && duckMeterRef.current > 0)
             )
           ) {
             wasBlocked = true;
             showDefenseFeedback("DEFENDED!");
+
+            if (guardHeldRef.current && guardMeterRef.current >= 100) {
+              setGuardMeter(0);
+              setGuardHeld(false);
+            }
           }
 
           if (!wasBlocked) {
@@ -447,10 +452,11 @@ export default function FightScreen({ fightId, onExit }) {
                 label="Guard"
                 disabled={guardMeter < 100}
                 onPressIn={() => {
-                  if (guardMeter >= 100) {
+                  if (guardMeter >= 100 && !duckHeld) {
                     setGuardHeld(true);
                   }
                 }}
+
                 onPressOut={() => setGuardHeld(false)}
                 meter={guardMeter}
               />
@@ -458,7 +464,7 @@ export default function FightScreen({ fightId, onExit }) {
                 label="Duck"
                 disabled={duckMeter <= 0}
                 onPressIn={() => {
-                  if (duckMeter > 0) {
+                  if (duckMeter > 0 && !guardHeld) {
                     setDuckHeld(true);
                   }
                 }}
