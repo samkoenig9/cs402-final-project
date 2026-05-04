@@ -159,15 +159,81 @@ export const fightConfigs = {
   },
   'fight-3': {
     id: 'fight-3',
-    label: 'Fight 3',
-    detail: 'Guard pressure test',
+    label: 'Dodgeballer',
+    detail: 'Fast throws with tricky timing',
     opponent: {
-      name: 'Opponent 3',
-      initialHealth: 100,
-      // image: require('../assets/opponent3.png'),
+      name: 'Dodgeballer',
+      initialHealth: 120,
+      image: require('../../assets/enemies/enemy3/enemy3_idle.jpeg'),
+      idleImage: require('../../assets/enemies/enemy3/enemy3_idle.jpeg'),
+      windupImage: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
+      attackImage: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
+      vertices: [
+        [20, 50, 0, 75, 0, 100, 0], // idle
+        [0, 0, 100, 0, 0, 0, 0],    // wind
+        [100, 0, 0, 0, 0, 0, 0],    // attack
+        [0, 0, 0, 0, 100, 0, 0],    // duckwind
+        [100, 0, 0, 0, 0, 0, 0],    // duckattack
+        [0, 0, 0, 0, 0, 0, 100],    // guardwind
+        [100, 0, 0, 0, 0, 0, 0],    // guardattack
+      ],
+      states: [
+        {
+          image: '../../assets/enemies/enemy3/enemy3_idle.jpeg',
+          duration: 1800,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          duration: 900,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          duration: 350,
+          isAttack: true,
+          attackType: 'both',
+          damage: 6,
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          duration: 800,
+          isAttack: false,
+          attackType: 'duck',
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          duration: 350,
+          isAttack: true,
+          attackType: 'duck',
+          damage: 6,
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          duration: 800,
+          isAttack: false,
+          attackType: 'guard',
+        },
+        {
+          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          duration: 350,
+          isAttack: true,
+          attackType: 'guard',
+          damage: 6,
+        },
+      ],
     },
     player: {
-      initialHealth: 100,
+      initialHealth: 120,
+      attack: {
+        cooldownMs: 650,
+        zones: {
+          top: { damage: 3 },
+          bottom: { damage: 4 },
+        },
+      },
     },
   },
   'fight-4': {
