@@ -21,45 +21,45 @@ export const fightConfigs = {
         ],
         states: [
           { // idle
-          image: '../../assets/enemies/enemy1/ham.jpg',
+          image: require('../../assets/enemies/enemy1/ham.jpg'),
           duration: 2500,
           isAttack: false,
           attackType: "both"
           },
           { // wind
-          image: '../../assets/enemies/enemy1/ham_wind.jpg',
+          image: require('../../assets/enemies/enemy1/ham_wind.jpg'),
           duration: 1200,
           isAttack: false,
           attackType: "both"
           },
           { // attack
-          image: '../../assets/enemies/enemy1/ham_attack.jpg',
+          image: require('../../assets/enemies/enemy1/ham_attack.jpg'),
           duration: 500,
           isAttack: true,
           attackType: "both",
           damage: 2
           },
           { // duckwind
-          image: '../../assets/enemies/enemy1/ham.jpg',
+          image: require('../../assets/enemies/enemy1/ham.jpg'),
           duration: 1200,
           isAttack: false,
           attackType: "duck"
           },
           { // duckattack
-          image: '../../assets/enemies/enemy1/ham.jpg',
+          image: require('../../assets/enemies/enemy1/ham.jpg'),
           duration: 500,
           isAttack: true,
           attackType: "duck",
           damage: 2
           },
           { // guardwind
-          image: '../../assets/enemies/enemy1/ham.jpg',
+          image: require('../../assets/enemies/enemy1/ham.jpg'),
           duration: 1200,
           isAttack: false,
           attackType: "guard"
           },
           { // guardattack
-          image: '../../assets/enemies/enemy1/ham.jpg',
+          image: require('../../assets/enemies/enemy1/ham.jpg'),
           duration: 500,
           isAttack: true,
           attackType: "guard",
@@ -100,45 +100,45 @@ export const fightConfigs = {
         ],
         states: [
           { // idle
-          image: '../../assets/enemies/enemy2/enemy2_idle.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
           duration: 2000,
           isAttack: false,
           attackType: "both"
           },
           { // wind
-          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
           duration: 1000,
           isAttack: false,
           attackType: "both"
           },
           { // attack
-          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "both",
           damage: 5
           },
           { // duckwind
-          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
           duration: 900,
           isAttack: false,
           attackType: "duck"
           },
           { // duckattack
-          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "duck",
           damage: 5
           },
           { // guardwind
-          image: '../../assets/enemies/enemy2/enemy2_windup.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
           duration: 900,
           isAttack: false,
           attackType: "guard"
           },
           { // guardattack
-          image: '../../assets/enemies/enemy2/enemy2_attack.jpg',
+          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "guard",
@@ -179,45 +179,45 @@ export const fightConfigs = {
       ],
       states: [
         {
-          image: '../../assets/enemies/enemy3/enemy3_idle.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_idle.jpeg'),
           duration: 1800,
           isAttack: false,
           attackType: 'both',
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
           duration: 900,
           isAttack: false,
           attackType: 'both',
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
           duration: 350,
           isAttack: true,
           attackType: 'both',
           damage: 6,
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
           duration: 800,
           isAttack: false,
           attackType: 'duck',
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
           duration: 350,
           isAttack: true,
           attackType: 'duck',
           damage: 6,
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_windup.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
           duration: 800,
           isAttack: false,
           attackType: 'guard',
         },
         {
-          image: '../../assets/enemies/enemy3/enemy3_attack.jpeg',
+          image: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
           duration: 350,
           isAttack: true,
           attackType: 'guard',
