@@ -11,7 +11,7 @@ export const fightConfigs = {
       windupImage: require('../../assets/enemies/enemy1/ham_wind.jpg'),
       attackImage: require('../../assets/enemies/enemy1/ham_attack.jpg'),
           vertices: [
-          [30, 60, 0, 80, 0, 100, 0], // idle
+          [0, 100, 0, 0, 0, 0, 0], // idle
           [0, 0, 100, 0, 0, 0, 0], // wind
           [100, 0, 0, 0, 0, 0, 0], // attack
           [0, 0, 0, 0, 100, 0, 0], // duckwind
@@ -90,7 +90,7 @@ export const fightConfigs = {
       windupImage: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
       attackImage: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
       vertices: [
-          [20, 55, 0, 75, 0, 100, 0], // idle
+          [0, 55, 0, 75, 0, 100, 0], // idle
           [0, 0, 100, 0, 0, 0, 0], // wind
           [100, 0, 0, 0, 0, 0, 0], // attack
           [0, 0, 0, 0, 100, 0, 0], // duckwind
@@ -169,7 +169,7 @@ export const fightConfigs = {
       windupImage: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
       attackImage: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
       vertices: [
-        [20, 50, 0, 75, 0, 100, 0], // idle
+        [0, 50, 0, 75, 0, 100, 0], // idle
         [0, 0, 100, 0, 0, 0, 0],    // wind
         [100, 0, 0, 0, 0, 0, 0],    // attack
         [0, 0, 0, 0, 100, 0, 0],    // duckwind
