@@ -101,7 +101,6 @@ export default function FightScreen({ fightId, onExit }) {
   }
 
   const getEnemySpriteSource = () => {
-    /*
     if (displayState === "windup") {
       return fightConfig.opponent.windupImage || enemySpriteSource;
     }
@@ -111,9 +110,6 @@ export default function FightScreen({ fightId, onExit }) {
     }
 
     return fightConfig.opponent.idleImage || enemySpriteSource;
-    */
-    // get state
-    return require(fightConfig.opponent.states[currentStateIndex].image);
   };
 
   useEffect(() => {
