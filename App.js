@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import HomeScreen from './src/screens/HomeScreen';
 import SelectionScreen from './src/screens/SelectionScreen';
 import FightScreen from './src/screens/FightScreen';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('selection');
+  const [currentScreen, setCurrentScreen] = useState('home');
   const [selectedFightId, setSelectedFightId] = useState(null);
 
   if (currentScreen === 'fight' && selectedFightId) {
@@ -18,11 +19,21 @@ export default function App() {
     );
   }
 
+  if (currentScreen === 'selection') {
+    return (
+      <SelectionScreen
+        onFightSelected={(fightId) => {
+          setSelectedFightId(fightId);
+          setCurrentScreen('fight');
+        }}
+      />
+    );
+  }
+
   return (
-    <SelectionScreen
-      onFightSelected={(fightId) => {
-        setSelectedFightId(fightId);
-        setCurrentScreen('fight');
+    <HomeScreen
+      onStart={() => {
+        setCurrentScreen('selection');
       }}
     />
   );
