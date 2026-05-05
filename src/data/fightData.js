@@ -238,12 +238,68 @@ export const fightConfigs = {
   },
   'fight-4': {
     id: 'fight-4',
-    label: 'Fight 4',
-    detail: 'Mixed timing mix-up',
+    label: 'The Dental Phantom',
+    detail: 'Full Of Suprises!',
     opponent: {
-      name: 'Opponent 4',
+      name: 'Dentom',
       initialHealth: 100,
-      // image: require('../assets/opponent4.png'),
+      image: require('../../assets/enemies/enemy4/4idle.jpg'),
+      vertices: [
+        [0, 0, 0, 50, 0, 100, 0], // idle
+        [0, 20, 100, 0, 0, 0, 0],    // wind
+        [100, 50, 0, 0, 0, 0, 0],    // attack
+        [0, 1, 0, 0, 100, 0, 0],    // duckwind
+        [0, 100, 0, 0, 0, 10, 0],    // duckattack
+        [0, 1, 0, 0, 0, 0, 100],    // guardwind
+        [0, 100, 0, 0, 0, 0, 0],    // guardattack
+      ],
+      states: [
+        {
+          image: require('../../assets/enemies/enemy4/4idle.jpg'),
+          duration: 1800,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4windeither.jpg'),
+          duration: 200,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4attaeither.jpg'),
+          duration: 200,
+          isAttack: true,
+          attackType: 'both',
+          damage: 6,
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4winddodge.jpg'),
+          duration: 800,
+          isAttack: false,
+          attackType: 'duck',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4attadodge.jpg'),
+          duration: 350,
+          isAttack: true,
+          attackType: 'duck',
+          damage: 6,
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4windguard.jpg'),
+          duration: 800,
+          isAttack: false,
+          attackType: 'guard',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/4attaguard.jpg'),
+          duration: 350,
+          isAttack: true,
+          attackType: 'guard',
+          damage: 6,
+        },
+      ],
     },
     player: {
       initialHealth: 100,
@@ -251,12 +307,68 @@ export const fightConfigs = {
   },
   'fight-5': {
     id: 'fight-5',
-    label: 'Fight 5',
-    detail: 'Late round challenge',
+    label: 'Quapok',
+    detail: 'My Beloved Little Freaky Ducky Darling!',
     opponent: {
-      name: 'Opponent 5',
+      name: 'Quapok',
       initialHealth: 100,
-      // image: require('../assets/opponent5.png'),
+      image: require('../../assets/enemies/enemy5/q_idle.jpg'),
+      vertices: [
+        [0, 50, 0, 60, 0, 100, 0], // idle
+        [0, 0, 100, 10, 0, 20, 0],    // wind
+        [100, 40, 0, 20, 0, 10, 0],    // attack
+        [0, 10, 0, 0, 100, 0, 0],    // duckwind
+        [100, 0, 0, 20, 0, 10, 0],    // duckattack
+        [0, 10, 0, 0, 0, 0, 100],    // guardwind
+        [100, 40, 0, 20, 0, 10, 0],    // guardattack
+      ],
+      states: [
+        {
+          image: require('../../assets/enemies/enemy5/q_idle.jpg'),
+          duration: 600,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_either_wind.jpg'),
+          duration: 400,
+          isAttack: false,
+          attackType: 'both',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_either_att.jpg'),
+          duration: 350,
+          isAttack: true,
+          attackType: 'both',
+          damage: 6,
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_duck_wind.jpg'),
+          duration: 800,
+          isAttack: false,
+          attackType: 'duck',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_duck_att.jpg'),
+          duration: 350,
+          isAttack: true,
+          attackType: 'duck',
+          damage: 6,
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_guard_wind.jpg'),
+          duration: 600,
+          isAttack: false,
+          attackType: 'guard',
+        },
+        {
+          image: require('../../assets/enemies/enemy4/q_guard_att.jpg'),
+          duration: 150,
+          isAttack: true,
+          attackType: 'guard',
+          damage: 6,
+        },
+      ],
     },
     player: {
       initialHealth: 100,
