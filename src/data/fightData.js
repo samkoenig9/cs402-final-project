@@ -198,7 +198,7 @@ export const fightConfigs = {
           damage: 6,
         },
         {
-          image: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
+          image: require('../../assets/enemies/enemy3/enemy3_windup_d.jpeg'),
           duration: 800,
           isAttack: false,
           attackType: 'duck',
@@ -211,7 +211,7 @@ export const fightConfigs = {
           damage: 6,
         },
         {
-          image: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
+          image: require('../../assets/enemies/enemy3/enemy3_windup_g.jpeg'),
           duration: 800,
           isAttack: false,
           attackType: 'guard',
@@ -256,13 +256,13 @@ export const fightConfigs = {
       states: [
         {
           image: require('../../assets/enemies/enemy4/4idle.jpg'),
-          duration: 1800,
+          duration: 1000,
           isAttack: false,
           attackType: 'both',
         },
         {
           image: require('../../assets/enemies/enemy4/4windeither.jpg'),
-          duration: 400,
+          duration: 600,
           isAttack: false,
           attackType: 'both',
         },
