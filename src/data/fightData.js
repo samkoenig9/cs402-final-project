@@ -5,13 +5,13 @@ export const fightConfigs = {
     detail: 'Balanced opener',
     opponent: {
       name: 'Hamster',
-      initialHealth: 100,
+      initialHealth: 2500,
       image: require('../../assets/enemies/enemy1/ham.jpg'),
       idleImage: require('../../assets/enemies/enemy1/ham.jpg'),
       windupImage: require('../../assets/enemies/enemy1/ham_wind.jpg'),
       attackImage: require('../../assets/enemies/enemy1/ham_attack.jpg'),
           vertices: [
-          [30, 60, 0, 80, 0, 100, 0], // idle
+          [0, 60, 0, 80, 0, 100, 0], // idle
           [0, 0, 100, 0, 0, 0, 0], // wind
           [100, 0, 0, 0, 0, 0, 0], // attack
           [0, 0, 0, 0, 100, 0, 0], // duckwind
@@ -70,7 +70,7 @@ export const fightConfigs = {
     player: {
       initialHealth: 100,
       attack: {
-        cooldownMs: 1000,
+        cooldownMs: 100,
         zones: {
           top: { damage: 2 },
           bottom: { damage: 10 },
@@ -84,13 +84,13 @@ export const fightConfigs = {
     detail: 'Quick hits and timed defense',
     opponent: {
       name: 'Boxer',
-      initialHealth: 100,
+      initialHealth: 3000,
       image: require('../../assets/enemies/enemy2/2_idle.jpg'),
       idleImage: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
       windupImage: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
       attackImage: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
       vertices: [
-          [20, 55, 0, 75, 0, 100, 0], // idle
+          [0, 55, 0, 75, 0, 100, 0], // idle
           [0, 0, 100, 0, 0, 0, 0], // wind
           [100, 0, 0, 0, 0, 0, 0], // attack
           [0, 0, 0, 0, 100, 0, 0], // duckwind
@@ -149,7 +149,7 @@ export const fightConfigs = {
     player: {
       initialHealth: 200,
       attack: {
-        cooldownMs: 500,
+        cooldownMs: 100,
         zones: {
           top: { damage: 2 },
           bottom: { damage: 5 },
@@ -163,13 +163,13 @@ export const fightConfigs = {
     detail: 'Fast throws with tricky timing',
     opponent: {
       name: 'Dodgeballer',
-      initialHealth: 120,
+      initialHealth: 3200,
       image: require('../../assets/enemies/enemy3/enemy3_idle.jpeg'),
       idleImage: require('../../assets/enemies/enemy3/enemy3_idle.jpeg'),
       windupImage: require('../../assets/enemies/enemy3/enemy3_windup.jpeg'),
       attackImage: require('../../assets/enemies/enemy3/enemy3_attack.jpeg'),
       vertices: [
-        [20, 50, 0, 75, 0, 100, 0], // idle
+        [0, 50, 0, 75, 0, 100, 0], // idle
         [0, 0, 100, 0, 0, 0, 0],    // wind
         [100, 0, 0, 0, 0, 0, 0],    // attack
         [0, 0, 0, 0, 100, 0, 0],    // duckwind
@@ -228,7 +228,7 @@ export const fightConfigs = {
     player: {
       initialHealth: 120,
       attack: {
-        cooldownMs: 650,
+        cooldownMs: 100,
         zones: {
           top: { damage: 3 },
           bottom: { damage: 4 },
@@ -242,7 +242,7 @@ export const fightConfigs = {
     detail: 'Full Of Suprises!',
     opponent: {
       name: 'Dentom',
-      initialHealth: 100,
+      initialHealth: 4000,
       image: require('../../assets/enemies/enemy4/4idle.jpg'),
       vertices: [
         [0, 0, 0, 50, 0, 100, 0], // idle
@@ -262,7 +262,7 @@ export const fightConfigs = {
         },
         {
           image: require('../../assets/enemies/enemy4/4windeither.jpg'),
-          duration: 200,
+          duration: 400,
           isAttack: false,
           attackType: 'both',
         },
@@ -311,7 +311,7 @@ export const fightConfigs = {
     detail: 'My Beloved Little Freaky Ducky Darling!',
     opponent: {
       name: 'Quapok',
-      initialHealth: 100,
+      initialHealth: 5000,
       image: require('../../assets/enemies/enemy5/q_idle.jpg'),
       vertices: [
         [0, 50, 0, 60, 0, 100, 0], // idle
