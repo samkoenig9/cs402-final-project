@@ -81,11 +81,11 @@ export const fightConfigs = {
   'fight-2': {
     id: 'fight-2',
     label: 'Boxer',
-    detail: 'Quick punches and timed defense',
+    detail: 'Quick hits and timed defense',
     opponent: {
       name: 'Boxer',
       initialHealth: 100,
-      image: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
+      image: require('../../assets/enemies/enemy2/2_idle.jpg'),
       idleImage: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
       windupImage: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
       attackImage: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
@@ -100,45 +100,45 @@ export const fightConfigs = {
         ],
         states: [
           { // idle
-          image: require('../../assets/enemies/enemy2/enemy2_idle.jpg'),
+          image: require('../../assets/enemies/enemy2/2_idle.jpg'),
           duration: 2000,
           isAttack: false,
           attackType: "both"
           },
           { // wind
-          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
+          image: require('../../assets/enemies/enemy2/2_wind_either.jpg'),
           duration: 1000,
           isAttack: false,
           attackType: "both"
           },
           { // attack
-          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
+          image: require('../../assets/enemies/enemy2/2_attack_either.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "both",
           damage: 5
           },
           { // duckwind
-          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
+          image: require('../../assets/enemies/enemy2/2_wind_dodge.jpg'),
           duration: 900,
           isAttack: false,
           attackType: "duck"
           },
           { // duckattack
-          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
+          image: require('../../assets/enemies/enemy2/2_attack_dodge.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "duck",
           damage: 5
           },
           { // guardwind
-          image: require('../../assets/enemies/enemy2/enemy2_windup.jpg'),
+          image: require('../../assets/enemies/enemy2/2_wind_guard.jpg'),
           duration: 900,
           isAttack: false,
           attackType: "guard"
           },
           { // guardattack
-          image: require('../../assets/enemies/enemy2/enemy2_attack.jpg'),
+          image: require('../../assets/enemies/enemy2/2_attack_guard.jpg'),
           duration: 400,
           isAttack: true,
           attackType: "guard",
