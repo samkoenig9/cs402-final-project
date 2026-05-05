@@ -9,8 +9,12 @@ import DefenseButton from '../components/DefenseButton';
 export default function FightScreen({ fightId, onExit }) {
   const fightConfig = fightConfigs[fightId] || fightConfigs['fight-1'];
   const enemySpriteSource = fightConfig.opponent.image || fightConfigs['fight-1'].opponent.image;
+  // variables for player health
   const [playerHealth, setPlayerHealth] = useState(fightConfig.player.initialHealth);
   const [enemyHealth, setEnemyHealth] = useState(fightConfig.opponent.initialHealth);
+  // variables for player percentage
+  const [playerPercent, setPlayerPercent] = useState(100);
+  const [enemyPercent, setEnemyPercent] = useState(100);
   const [fightEnded, setFightEnded] = useState(false);
   const [attackCooldownUntil, setAttackCooldownUntil] = useState(0);
   const [attackCooldownRemaining, setAttackCooldownRemaining] = useState(0);
@@ -57,7 +61,7 @@ export default function FightScreen({ fightId, onExit }) {
 
   function getDefaultPlayerAttackConfig() {
     return {
-      cooldownMs: 350,
+      cooldownMs: 100,
       zones: {
         top: { damage: 1 },
         bottom: { damage: 1 },
@@ -101,7 +105,7 @@ export default function FightScreen({ fightId, onExit }) {
   }
 
   const getEnemySpriteSource = () => {
-    if (displayState === "windup") {
+    /*if (displayState === "windup") {
       return fightConfig.opponent.windupImage || enemySpriteSource;
     }
 
@@ -109,7 +113,8 @@ export default function FightScreen({ fightId, onExit }) {
       return fightConfig.opponent.attackImage || enemySpriteSource;
     }
 
-    return fightConfig.opponent.idleImage || enemySpriteSource;
+    return fightConfig.opponent.idleImage || enemySpriteSource;*/
+    return fightConfig.opponent.states[currentStateIndex].image || enemySpriteSource;
   };
 
   useEffect(() => {
@@ -150,6 +155,8 @@ export default function FightScreen({ fightId, onExit }) {
     }
     
     console.log(`Player attacked ${zone}! Enemy health: ${newEnemyHealth}`);
+    // set the percentage value for enemy health
+    setEnemyPercent((enemyHealth/fightConfig.opponent.initialHealth)*100);
   };
 
   useEffect(() => {
@@ -182,7 +189,7 @@ export default function FightScreen({ fightId, onExit }) {
     if (fightEnded) return;
 
     const guardMeterInterval = setInterval(() => {
-      setGuardMeter((prev) => Math.min(100, prev + 2)); // Guard refill rate (prev + _)
+      setGuardMeter((prev) => Math.min(100, prev + 10)); // Guard refill rate (prev + _)
     }, 100);
 
     return () => clearInterval(guardMeterInterval);
@@ -252,7 +259,7 @@ export default function FightScreen({ fightId, onExit }) {
   useEffect(() => {
     if (fightEnded) return;
 
-    const interval = setInterval(() => {
+    const interval = setInterval(() => {      
       const currentIndex = currentStateIndexRef.current;
       const currentState = states[currentIndex];
 
@@ -307,6 +314,8 @@ export default function FightScreen({ fightId, onExit }) {
           if (!wasBlocked) {
             setPlayerHealth((prev) => {
               const newHealth = Math.max(0, prev - attackDamage);
+              // set player health percentage
+              setPlayerPercent((newHealth/fightConfig.player.initialHealth)*100);
               if (newHealth <= 0) setFightEnded(true);
               return newHealth;
             });
@@ -315,7 +324,6 @@ export default function FightScreen({ fightId, onExit }) {
       }
 
     }, 100);
-
     return () => clearInterval(interval);
   }, [fightEnded]);
 
@@ -392,7 +400,7 @@ export default function FightScreen({ fightId, onExit }) {
 
           {/* Enemy health bar */}
           <View style={styles.healthBarContainer}>
-            <HealthBar label="Enemy HP" percentage={enemyHealth} isPlayer={false} />
+            <HealthBar label="Enemy HP" percentage={enemyPercent} isPlayer={false} />
           </View>
 
           {/* Sprite area with overlaid attack zones */}
@@ -441,7 +449,7 @@ export default function FightScreen({ fightId, onExit }) {
 
           {/* Player health bar */}
           <View style={styles.healthBarContainer}>
-            <HealthBar label="Player HP" percentage={playerHealth} isPlayer={true} />
+            <HealthBar label="Player HP" percentage={playerPercent} isPlayer={true} />
           </View>
 
           {/* Defense controls */}
