@@ -5,7 +5,7 @@ export const fightConfigs = {
     detail: 'Balanced opener',
     opponent: {
       name: 'Hamster',
-      initialHealth: 2500,
+      initialHealth: 500,
       image: require('../../assets/enemies/enemy1/ham.jpg'),
       idleImage: require('../../assets/enemies/enemy1/ham.jpg'),
       windupImage: require('../../assets/enemies/enemy1/ham_wind.jpg'),

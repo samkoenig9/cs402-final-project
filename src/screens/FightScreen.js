@@ -356,7 +356,7 @@ export default function FightScreen({ fightId, onExit }) {
             </Text>
             <Text style={styles.fightEndSubtitle}>
               {isVictory
-                ? `Enemy defeated after ${fightConfig.opponent.initialHealth - enemyHealth} attacks`
+                ? `Enemy defeated after ${fightConfig.opponent.initialHealth - enemyHealth} damage dealt`
                 : `You were defeated after ${fightConfig.player.initialHealth - playerHealth} damage taken`
               }
             </Text>
