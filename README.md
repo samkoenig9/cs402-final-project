@@ -125,10 +125,6 @@ The app was tested using Expo Go. Testing included:
 
 Some enemy images were adapted from external GIF sources for use in this class project.
 
-**Fight 2 - Boxer** enemy images adapted from:
-> Tenor. "Boxing Woman GIF." Tenor, 16 Dec. 2024.  
-> https://tenor.com/view/boxing-woman-pov-first-person-gif-14706033760261335031
-
 **Fight 3 - Dodgeballer** enemy images adapted from:
 > Tenor. "Dodgeball Movie GIF." Tenor, 2 Sept. 2019.  
 > https://tenor.com/view/dodgeball-movie-white-goodman-ben-stiller-burn-gif-14926681
