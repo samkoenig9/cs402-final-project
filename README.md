@@ -43,43 +43,18 @@ Make sure you have the following installed:
 
 ### Setup
 
-Clone the repository:
+Download and extract the ZIP file. 
 
-```bash
-git clone https://github.com/samkoenig9/cs402-final-project.git
-```
+Open a terminal and move into extracted project folder.
 
-Go into the project folder:
+Install dependencies: npm install
 
-```bash
-cd cs402-final-project
-```
+Start Expo server: npx expo start
 
-Install dependencies:
+If the app does not load correctly, clear the cache: npx expo start -c
 
-```bash
-npm install
-```
+If your phone cannot connect to the QR code, try tunnel mode: npx expo start --tunnel
 
-Start the Expo development server:
-
-```bash
-npx expo start
-```
-
-If the app does not load correctly, clear the cache:
-
-```bash
-npx expo start -c
-```
-
-If your phone cannot connect to the QR code, try tunnel mode:
-
-```bash
-npx expo start --tunnel
-```
-
----
 
 ## How to Use the App
 
