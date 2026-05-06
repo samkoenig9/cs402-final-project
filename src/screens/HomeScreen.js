@@ -1,27 +1,24 @@
-import { ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, Pressable, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default function HomeScreen({ onStart }) {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" />
+    <View style={styles.screen}>
+      <StatusBar style="light" hidden />
+
       <Pressable style={styles.container} onPress={onStart}>
         <ImageBackground
           source={require('../../assets/home-screen.png')}
           style={styles.background}
-          resizeMode="cover"
-        >
-          <View style={styles.overlay}>
-            {/* optional invisible spacer so layout behaves nicely */}
-          </View>
-        </ImageBackground>
+          resizeMode="contain"
+        />
       </Pressable>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  screen: {
     flex: 1,
     backgroundColor: '#0d1016',
   },
@@ -32,8 +29,5 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-  },
-  overlay: {
-    flex: 1,
   },
 });
